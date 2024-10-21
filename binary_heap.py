@@ -2,15 +2,20 @@ class BinaryMinHeap:
     def __init__(self):
         self.heap = []
 
-    def insert(self, value: int):
+    def insert(self, value: int, print_steps=False):
+        print('Inserting value: ', value)
+        print('Heap before: ', self.heap)
         self.heap.append(value)
-        self.bubble_up(len(self.heap) - 1)
-
-    def bubble_up(self, index):
+        self.bubble_up(len(self.heap) - 1, print_steps)
+        print('Heap after: ', self.heap)
+        
+    def bubble_up(self, index, print_steps=False):
         parent_index = (index - 1) // 2
         if index > 0 and self.heap[index] < self.heap[parent_index]:
+            if print_steps:
+                print(f'Swapping {self.heap[index]} and {self.heap[parent_index]}')
             self.heap[index], self.heap[parent_index] = self.heap[parent_index], self.heap[index]
-            self.bubble_up(parent_index)
+            self.bubble_up(parent_index, print_steps)
 
     def extract_min(self):
         if len(self.heap) == 0:

@@ -2,7 +2,7 @@ from binary_heap import BinaryMinHeap
 from random import *
 
 rand = Random()
-values = list(range(1,9))
+values = list(range(1,8))
 rand.shuffle(values)
 
 heap = BinaryMinHeap()
@@ -11,13 +11,7 @@ for value in values:
 
 print('Original list:', values)
 print('Heap contents:', heap.heap)
+print('Inserting the value 0')
 
-trio = [heap.heap[0], heap.heap[1], heap.heap[3]]
-print('Trio:', trio)
-
-removed = []
-while heap.size() > 0:
-    removed.append(heap.extract_min())
-
-print('Removed:', removed)
+heap.insert(0, print_steps=True)
 
