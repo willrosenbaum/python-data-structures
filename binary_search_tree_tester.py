@@ -2,6 +2,7 @@ import random
 from binary_search_tree import BinarySearchTree
 
 rand = random.Random()
+rand.seed(1)
 
 def generate_examples(num_examples):
     examples = []
