@@ -1,6 +1,6 @@
 import random
 
-# random.seed(42) # random seed for Fall 2024 Examples
+random.seed(42) # random seed for Fall 2024 Examples
 
 
 def get_alphabet(pattern: str) -> list[str]:
@@ -156,7 +156,9 @@ if __name__ == "__main__":
 
     # generate_kmp_failure_array_examples()
 
-    generate_kmp_state_examples(1)
+    #generate_kmp_state_examples(1)
+
+    print(kmp_failure_array("BCCCBCCBCB"))
 
     # print(f"latex dfa table:\n{generate_latex_dfa_table(dfa)}")
 
