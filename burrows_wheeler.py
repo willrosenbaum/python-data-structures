@@ -1,51 +1,57 @@
-from curses.ascii import STX, ETX
+from functools import cmp_to_key
 
-## Code taken from Wikipedia:
-## https://en.wikipedia.org/wiki/Burrows–Wheeler_transform
+def sentinel_compare_string(a: str, b: str, sentinel: str = '$') -> bool:
+    if len(a) > len(b):
+        a, b = b, a
+    
+    i = 0
+    while i < len(a) and a[i] == b[i]:
+        i += 1
+    
+    if i == len(a):
+        if len(a) == len(b):
+            return 0
+        return -1
+    
+    if a[i] == sentinel:
+        return -1
+    
+    if b[i] == sentinel:
+        return 1
+    
+    return ord(a[i]) - ord(b[i])
 
-def bwt(s: str, start=chr(STX), end=chr(ETX)) -> str:
-    """
-    Apply Burrows–Wheeler transform to input string.
+def sentinel_compare_char(a: str, b: str, sentinel: str = '$'):
+    if a == sentinel:
+        return -1
+    if b == sentinel: 
+        return 1
+    return ord(a) - ord(b)
 
-    >>> bwt('BANANA')
-    '\x03ANNB\x02AA'
-    >>> bwt('BANANA', start='^', end='$')
-    '^ANNB$AA'
-    >>> bwt('BANANA', start='%', end='$')
-    '%A$NNB%AA'
-    """
-    assert (
-        start not in s and end not in s
-    ), "Input string cannot contain start and end characters"
-    s = f"{start}{s}{end}"  # Add start and end of text marker
+def burrows_wheeler(text: str, sentinel: str = '$') -> str:
+    if text[-1] != sentinel:
+        text = text + sentinel
+    shifts = []
+    for i in range(len(text)):
+        shifts.append(text[i:len(text)]+text[0:i])
+    shifts = sorted(shifts, key=cmp_to_key(lambda s, t: sentinel_compare_string(s,t,sentinel)))
 
-    # Table of rotations of string
-    table = sorted(f"{s[i:]}{s[:i]}" for i, c in enumerate(s))
-    last_column = [row[-1:] for row in table]  # Last characters of each row
-    return "".join(last_column)  # Convert list of characters into string
+    return ''.join([s[-1] for s in shifts])
 
-def inverse_bwt(r: str, start=chr(STX), end=chr(ETX)) -> str:
-    """
-    Apply inverse Burrows–Wheeler transform.
+def inverse_burrows_wheeler(text: str, sentinel: str = '$') -> str:
+    pairs = [(text[i], i) for i in range(len(text))]
+    sorted_pairs = sorted(pairs, key=cmp_to_key(lambda a, b: sentinel_compare_char(a[0], b[0], sentinel)))
+    next_index = sorted_pairs[0][1]
+    bw_inverse = ''
+    while next_index != 0:
+        bw_inverse = bw_inverse + sorted_pairs[next_index][0]
+        next_index = sorted_pairs[next_index][1]
+    return bw_inverse
+    
 
-    >>> inverse_bwt('\x03ANNB\x02AA')
-    'BANANA'
-    >>> inverse_bwt('^ANNB$AA', start='^', end='$')
-    'BANANA'
-    >>> inverse_bwt('%A$NNB%AA', start='%', end='$')
-    'BANANA'
-    """
-    str_len = len(r)
-    table = [""] * str_len  # Make empty table
-    for _ in range(str_len):
-        table = sorted(rc + tc for rc, tc in zip(r, table))  # Add a column of r
-
-    # Iterate over and check whether last character ends with end character or not
-    s = next((row for row in table if row.endswith(end)), "")
-
-    # Retrieve data from array and get rid of start and end markers
-    return s.rstrip(end).lstrip(start)
-
-if __name__ == "__main__":
-    print('bwt("intestine") = ', bwt("intestine"))
-    print('inverse_bwt(bwt("intestine")) = ', inverse_bwt(bwt("intestine")))
+if __name__ == '__main__':
+    text = 'alf eats alfalfa'
+    bw = burrows_wheeler(text)
+    print(f"original text: {text}")
+    print(f"burrow-wheeler transformed: {bw}")
+    print(f"burrows-wheeler inverse: {inverse_burrows_wheeler(bw)}")
