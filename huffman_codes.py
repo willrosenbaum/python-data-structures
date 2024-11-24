@@ -95,13 +95,16 @@ E : 4, L : 2, N : 1, P : 1, S : 5
     # decoded_message = tree.decode(encoded_message)
     # print(f'Decoded message: {decoded_message}')
 
+    count = 1
     for word in words:
+        print(f'Example: {count}')
         print(f'Word: {word}')
         weights = compute_frequency_count(word)
-        print(f'Distinct letters: {sorted(list(weights.keys()))}')
-        print(f'Weights: {weights}')
+        print(f'Distinct letters: {sorted(list(weights.keys()))}'.replace("'", "").replace('[', '{').replace(']', '}'))
+        print(f'Weights: {weights}'.replace("'", ""))
         tree = HuffmanTree.build_huffman_tree(weights)
         print(f'Code: {tree.get_code()}')
         print(f'Encoded message: {tree.encode(word)}')
-        print(f'Decoded message: {tree.decode(tree.encode(word))}')
+        print(f'Decoded message: {tree.decode(tree.encode(word))}\n')
+        count += 1
 
