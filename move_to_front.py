@@ -17,7 +17,7 @@ def inverse_move_to_front(encoded: list[int], alphabet: list[str]) -> str:
     return ''.join(decoded)
 
 if __name__ == '__main__':
-    text = 'anabanana'
+    text = 'chihuahua'
     alphabet = get_alphabet(text)
     print(f'alphabet: {alphabet}')
     encoded = move_to_front(text, alphabet.copy())
