@@ -33,7 +33,7 @@ def lzw_decode(encoded: list[int], alphabet: list[str]) -> str:
         cur_phrase = next_phrase
         next_codeword = encoded[i]
         if next_codeword == k:
-            print('hit special case!')
+            #print('hit special case!')
             next_phrase = cur_phrase + cur_phrase[0]
         else:
             next_phrase = lookup_table[next_codeword]
