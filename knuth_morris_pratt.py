@@ -45,7 +45,7 @@ def generate_latex_dfa_table(dfa: list[dict[str, int]]) -> str:
 
     return str  
 
-
+## TODO: fix this to deal with the case where the pattern is matched and we continue reading the text
 def kmp_failure_array(pattern: str) -> list[int]:
     failure_array = [0] * len(pattern)
     x = 0
@@ -65,16 +65,22 @@ def apply_kmp(pattern: str, text: str) -> list[int]:
     failure_array = kmp_failure_array(pattern)
     result = []
     states = [0] * (len(text))
-    k = 0
-    for i, ch in enumerate(text):
-        while k > 0 and pattern[k] != ch:
-            k = failure_array[k-1]
-        if pattern[k] == ch:
-            k += 1
-        states[i] = k
-        if k == len(pattern):
-            result.append(i - len(pattern) + 1)
-            k = failure_array[k-1]
+    j = 0 # current index in pattern
+    i = 0 # current index in text
+    while i < len(text):
+        if text[i] == pattern[j]:
+            j += 1
+            states[i] = j
+            i += 1
+            if j == len(pattern):
+                result.append(i - len(pattern) + 1)
+                j = failure_array[j-1]
+        else:
+            if j > 0:
+                j = failure_array[j]
+                states[i] = j
+            else:
+                i += 1
     return states
 
 # generate an example of applying the KMP failure link automaton to a text
@@ -131,7 +137,7 @@ def generate_kmp_failure_array_examples(alphabet_size: int = 3, string_length: i
 
 def generate_kmp_state_examples(num_examples: int = 10) -> None:
     for i in range(num_examples):
-        pattern, text, states = generate_kmp_example(alphabet_size=3, text_length=32, pattern_length=6, min_matches=3)
+        pattern, text, states = generate_kmp_example(alphabet_size=3, text_length=16, pattern_length=6, min_matches=3)
 
         # pick a random index at state at least 2 with higher states more likely
         heavy_states = [max(0, states[i]-1) for i in range(0, len(states))]
@@ -156,9 +162,29 @@ if __name__ == "__main__":
 
     # generate_kmp_failure_array_examples()
 
-    #generate_kmp_state_examples(1)
+    generate_kmp_state_examples()
 
-    print(kmp_failure_array("BCCCBCCBCB"))
+    # pattern = "BACBAB"
+    # kmp = kmp_failure_array(pattern)
+    # text = "BACBAACBCCCB"
+    # states = apply_kmp(pattern, text)
+    # print(f"text: {text}")
+    # print(f"pattern: {pattern}")
+    # print(f"failure array: {kmp}")
+    # print(f"states: {states}")
+
+    # pattern = "ABABAB"
+    # kmp = kmp_failure_array(pattern)
+    # text = "ABABABABC"
+    # states = apply_kmp(pattern, text)
+    # print(f"text: {text}")
+    # print(f"pattern: {pattern}")
+    # print(f"failure array: {kmp}")
+    # print(f"states: {states}")
+
+
+
+    #print(kmp_failure_array("BCCCBCCBCB"))
 
     # print(f"latex dfa table:\n{generate_latex_dfa_table(dfa)}")
 
