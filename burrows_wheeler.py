@@ -50,7 +50,7 @@ def inverse_burrows_wheeler(text: str, sentinel: str = '$') -> str:
     
 
 if __name__ == '__main__':
-    text = 'banana'
+    text = 'evennesses'
     bw = burrows_wheeler(text)
     print(f"original text: {text}")
     print(f"burrow-wheeler transformed: {bw}")

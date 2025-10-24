@@ -1,6 +1,7 @@
 import random
 
-random.seed(42) # random seed for Fall 2024 Examples
+# random.seed(42) # random seed for Fall 2024 Examples
+random.seed(10)
 
 
 def get_alphabet(pattern: str) -> list[str]:
@@ -152,17 +153,17 @@ def generate_kmp_state_examples(num_examples: int = 10) -> None:
 
 
 if __name__ == "__main__":
-    # pattern = "ABABACA"
-    # kmp = kmp_failure_array(pattern)
-    # print(f"pattern: {pattern}")
-    # print(f"failure array: {kmp}")
-    # dfa = generate_dfa_table(pattern)
-    # print(f"pattern: {pattern}")
-    # print_dfa_table(dfa)
+    pattern = "ABCABABCACABCA"
+    kmp = kmp_failure_array(pattern)
+    print(f"pattern: {pattern}")
+    print(f"failure array: {kmp}")
+    dfa = generate_dfa_table(pattern)
+    print(f"pattern: {pattern}")
+    print_dfa_table(dfa)
 
     # generate_kmp_failure_array_examples()
 
-    generate_kmp_state_examples()
+    # generate_kmp_state_examples()
 
     # pattern = "BACBAB"
     # kmp = kmp_failure_array(pattern)
