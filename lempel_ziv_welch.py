@@ -1,3 +1,5 @@
+codeword_length = 4
+
 def get_alphabet(text: str) -> list[str]:
     return sorted(list(set(text)))
 
@@ -43,30 +45,25 @@ def lzw_decode(encoded: list[int], alphabet: list[str]) -> str:
         k += 1
     return ''.join(decoded_phrases)
 
-if __name__ == '__main__':
-    print('Example 1:')
-    text = 'ABABABACABABA'
+def print_example(text: str):
     alphabet = get_alphabet(text)
     encoded, dictionary = lzw_encode(text, alphabet)
     print(f'text: {text}')
     print(f'alphabet: {alphabet}')
     print(f'encoded: {encoded}')
-    binary = ''.join([format(ch, '04b') for ch in encoded])
-    print(f'encoded in binary: {binary}')
-    print(f'dictionary: {dictionary}')
-    decoded = lzw_decode(encoded, alphabet)
-    print(f'decoded: {decoded}\n')
-
-    print('Example 2:')
-    text = 'AAAAAGH!!!'
-    alphabet = get_alphabet(text)
-    encoded, dictionary = lzw_encode(text, alphabet)
-    print(f'text: {text}')
-    print(f'alphabet: {alphabet}')
-    print(f'encoded: {encoded}')
-    binary = ''.join([format(ch, '04b') for ch in encoded])
+    binary = ' '.join([format(ch, f'0{codeword_length}b') for ch in encoded])
     print(f'encoded in binary: {binary}')
     print(f'dictionary: {dictionary}')
     decoded = lzw_decode(encoded, alphabet)
     print(f'decoded: {decoded}')
+
+if __name__ == '__main__':
+    print('Example 1:')
+    print_example('ABABABACABABA')
+
+    print('\nExample 2:')
+    print_example('AAAAAGH!!!')
+
+    print('\nExample 3:')
+    print_example('CARACARAS')
             
