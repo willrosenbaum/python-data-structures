@@ -49,9 +49,18 @@ def inverse_burrows_wheeler(text: str, sentinel: str = '$') -> str:
     return bw_inverse
     
 
-if __name__ == '__main__':
-    text = 'evennesses'
-    bw = burrows_wheeler(text)
+def print_example(text: str) -> None:
     print(f"original text: {text}")
+    bw = burrows_wheeler(text)
     print(f"burrow-wheeler transformed: {bw}")
     print(f"burrows-wheeler inverse: {inverse_burrows_wheeler(bw)}")
+
+if __name__ == '__main__':
+    print('Example 1:')
+    print_example('evennesses')
+    print('Example 2:')
+    print_example('bananas')
+    print('Example 3:')
+    print_example('ratatat')
+    print('Example 4:')
+    print_example('piripiri')
