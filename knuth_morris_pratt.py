@@ -153,7 +153,7 @@ def generate_kmp_state_examples(num_examples: int = 10) -> None:
 
 
 if __name__ == "__main__":
-    pattern = "ABCABABCACABCA"
+    pattern = "BARBARABARBS"
     kmp = kmp_failure_array(pattern)
     print(f"pattern: {pattern}")
     print(f"failure array: {kmp}")

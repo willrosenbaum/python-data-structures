@@ -14,7 +14,7 @@ def lcp_array(text: str) -> list[int]:
     return lcp_array
 
 if __name__ == '__main__':
-    text = 'mississippi$'
+    text = 'prepossesses$'
     sorted_suffixes = sorted(suffixes(text))
     print(sorted_suffixes)
     lcp_array = lcp_array(text)
