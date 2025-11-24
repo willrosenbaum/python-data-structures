@@ -161,6 +161,14 @@ if __name__ == "__main__":
     print(f"pattern: {pattern}")
     print_dfa_table(dfa)
 
+    pattern = "ALFALFAALF"
+    kmp = kmp_failure_array(pattern)
+    print(f"pattern: {pattern}")
+    print(f"failure array: {kmp}")
+    dfa = generate_dfa_table(pattern)
+    print(f"pattern: {pattern}")
+    print_dfa_table(dfa)
+
     # generate_kmp_failure_array_examples()
 
     # generate_kmp_state_examples()
