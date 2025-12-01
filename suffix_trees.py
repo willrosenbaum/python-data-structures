@@ -22,8 +22,12 @@ def rank_array_from_suffix_array(sa: list[int]) -> list[int]:
         rank_array[sa[i]] = i
     return rank_array
 
+def distinct_letters(text: str) -> list[str]:
+    return sorted(list(set(text)))
+
 def print_example(text: str) -> None:
     print(f'text: {text}')
+    print(f'distinct_letters: {distinct_letters(text)}')
     sorted_suffixes = sorted(suffixes(text))
     print(sorted_suffixes)
     lcp = lcp_array(text)
@@ -39,4 +43,6 @@ if __name__ == '__main__':
     text = 'ratatat$'
     print_example(text)
     text = 'piripiri$'
+    print_example(text)
+    text = 'cabacababaca$'
     print_example(text)
