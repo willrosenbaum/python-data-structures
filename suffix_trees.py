@@ -13,9 +13,20 @@ def lcp_array(text: str) -> list[int]:
                 break
     return lcp_array
 
+def suffix_array(text: str) -> list[int]:
+    return sorted(range(len(text)), key=lambda i: text[i:])
+
+def rank_array_from_suffix_array(sa: list[int]) -> list[int]:
+    rank_array = [0] * len(sa)
+    for i in range(len(sa)):
+        rank_array[sa[i]] = i
+    return rank_array
+    
 if __name__ == '__main__':
     text = 'prepossesses$'
     sorted_suffixes = sorted(suffixes(text))
     print(sorted_suffixes)
     lcp_array = lcp_array(text)
-    print(lcp_array)
+    print('lcp_array: ', lcp_array)
+    print('suffix_array: ', suffix_array(text))
+    print('rank_array: ', rank_array_from_suffix_array(suffix_array(text)))
