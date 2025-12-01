@@ -21,12 +21,22 @@ def rank_array_from_suffix_array(sa: list[int]) -> list[int]:
     for i in range(len(sa)):
         rank_array[sa[i]] = i
     return rank_array
-    
-if __name__ == '__main__':
-    text = 'prepossesses$'
+
+def print_example(text: str) -> None:
+    print(f'text: {text}')
     sorted_suffixes = sorted(suffixes(text))
     print(sorted_suffixes)
-    lcp_array = lcp_array(text)
-    print('lcp_array: ', lcp_array)
+    lcp = lcp_array(text)
+    print('lcp: ', lcp)
     print('suffix_array: ', suffix_array(text))
     print('rank_array: ', rank_array_from_suffix_array(suffix_array(text)))
+
+if __name__ == '__main__':
+    text = 'prepossesses$'
+    print_example(text)
+    text = 'bananas$'
+    print_example(text)
+    text = 'ratatat$'
+    print_example(text)
+    text = 'piripiri$'
+    print_example(text)
